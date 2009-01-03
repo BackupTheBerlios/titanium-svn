@@ -31,3 +31,35 @@
 	"date.h"
 	<ctime>
 
+1230047894 source:c:\shared\svn\scratch\event.cpp
+	"event.h"
+	<fstream>
+
+1230047890 c:\shared\svn\scratch\event.h
+	<string>
+	"date.h"
+
+1230033472 c:\shared\svn\scratch\date.h
+	<iostream>
+	<fstream>
+
+1230052361 source:c:\shared\svn\scratch\main.cpp
+	<iostream>
+	"organise.h"
+
+1230050378 c:\shared\svn\scratch\organise.h
+	<ctime>
+	<vector>
+	<algorithm>
+	"event.h"
+
+1230052274 source:c:\shared\svn\scratch\organise.cpp
+	"organise.h"
+	<iostream>
+	<cstdlib>
+	<sstream>
+
+1230033186 source:c:\shared\svn\scratch\date.cpp
+	"date.h"
+	<ctime>
+
