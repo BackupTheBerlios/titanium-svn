@@ -1,4 +1,7 @@
-﻿#include "event.h"
+#ifndef W_EVENT_H
+#define W_EVENT_H
+#include "event.h"
+#include <vector>
 /**
   *A couple developement notes:
   *	If you make a direct derivation of wEvent, don't forget to virtualise, to support  merging
@@ -9,8 +12,8 @@
 namespace evt{
 	class wEvent{
 	public:
-		//for those who don't get the constructor notation, see [Bjarne-くん,1998], 11.3.4
-		wEvent(Event base):Base(base);//I will personally shoot the first person who says capital overloading is bad form
+		//for those who don't get the constructor notation, see [Bjarne], 11.3.4
+		wEvent(Event base):Base(base){};//I will personally shoot the first person who says capital overloading is bad form
 		Event Base;
 		virtual std::vector<Event>& eventGen(std::vector<Event>& ReturnValue);
 		//yeah, my variable names aren't imaginative, sue me
@@ -20,26 +23,40 @@ namespace evt{
 	//repeating event,  repeats every  repeater until trueend
 	//(note, we add repeater to the start)
 	public:
-		r_wEvent(Event base,Time repeater,Date trueEnd):
-		wEvent(base),Repeater(repeater),TrueEnd(trueEnd);
-		Time Repeater;
-		Date TrueEnd;
+		r_wEvent(Event base,Date::Time repeater,Date::Date trueEnd):
+		wEvent(base),Repeater(repeater),TrueEnd(trueEnd){};
+		Date::Time Repeater;
+		Date::Date TrueEnd;
 		virtual std::vector<Event>& eventGen(std::vector<Event>& ReturnValue);
 	};
 	class s_wEvent:public virtual wEvent{
 	//This time we're cutting the  event up into bits of length SubLength
 	public:
-		s_wEvent(Event base,Time SubLength):
-		wEvent(base),subLength(SubLength);
-		Time subLength;
+		s_wEvent(Event base,Date::Time SubLength):
+		wEvent(base),subLength(SubLength){};
+		Date::Time subLength;
 		virtual std::vector<Event>& eventGen(std::vector<Event>& ReturnValue);
 	};
 	class sr_wEvent:public s_wEvent,public r_wEvent{
 	//a merge of s_wEvent and r_wEvent. see the cpp file to why the current model is dated, function object
 	//transition SOON
 	public:
-		sr_wEvent(Event base,Time SubLength,Time repeater,Date trueEnd):
-		s_wEvent(base,SubLength),r_wEvent(base,repeater,trueEnd);
-		virtual stD::vector<Event>& eventGen(std::vector<Event>& ReturnValue);
+		sr_wEvent(Event base,Date::Time SubLength,Date::Time repeater,Date::Date trueEnd):
+		wEvent(base),s_wEvent(base,SubLength),r_wEvent(base,repeater,trueEnd){};
+		virtual std::vector<Event>& eventGen(std::vector<Event>& ReturnValue);
+	};
+	//right now I'm too lazy to actually build a good container class
+	//I'm just going to overload ->
+	class wEcontainer{
+    public:
+        std::vector<wEvent*> v;
+        std::vector<Event>& EventGen(std::vector<Event>& ReturnValue){
+            for(int i=0;i<v.size();i++) v[i]->eventGen(ReturnValue);
+            return ReturnValue;
+        }
+        ~wEcontainer(){
+            for(int i=0;i<v.size();i++) delete v[i];
+        }
 	};
 }
+#endif

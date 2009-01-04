@@ -22,7 +22,7 @@
 #include <ctime>
 #include <vector>
 #include <algorithm>
-#include "event.h"
+#include "wevent.h"
 typedef std::vector<std::pair<bool,evt::Event> > calendar;
 typedef std::vector<evt::Event> evtlist;
 Date::Date currTime();

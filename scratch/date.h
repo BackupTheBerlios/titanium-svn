@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Raphael„ÄÄGaschignard   *
+ *   Copyright (C) 2008 by RaphaelÅ@Gaschignard   *
  *   dasuraga@gmail.com   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,7 +23,10 @@
  */
  #ifndef DATE_H
  #define DATE_H
-
+ //standard Debug headers
+#define DEBUG 1
+#define DD if(DEBUG) std::cout<<
+#define EE ;std::cout<<"\n";
 #include <iostream>
 #include <fstream>
 namespace Date{
@@ -35,6 +38,9 @@ namespace Date{
         virtual int Year();
 		virtual int Month();
 		virtual int Day();
+		virtual int Hour();
+		virtual int Min();
+		virtual int Sec();
 		long tSeconds();//used for comparison
         virtual Time operator -( Date second);
 		Date operator +(Time second);
@@ -45,12 +51,15 @@ namespace Date{
 		bool operator >=(Date second);
         Date(bool truth,long tSeconds);
         Date(){ seconds=0;};
+		
 		Date(int year,int month,int day,int hour,int min,int second);
 		virtual ~Date(){};
 		friend std::fstream& operator <<(std::fstream& file,Date& date);
 		friend std::fstream& operator >>(std::fstream& file,Date& date);
 		virtual operator long();
+		virtual std::string str();
 	};
+	Date curDate();
 	class Time:public Date{
     public:
 		Time(bool truth,long tSeconds):Date(truth,tSeconds){}
@@ -58,6 +67,7 @@ namespace Date{
 		virtual int Year();
 		virtual int Month();
 		virtual int Day();
+
 		friend std::fstream& operator <<(std::fstream& file,Time& time);
 		friend std::fstream& operator >>(std::fstream& file,Time& time);
 	};

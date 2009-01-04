@@ -1,4 +1,5 @@
 #include "date.h"
+#include "ustd.h"
 #include <ctime>
 /**
  *NOTES:
@@ -24,6 +25,18 @@ namespace Date{
 	int Date::Day(){
 	    tm* temp=gmtime(&seconds);
 		return temp->tm_mday;
+	}
+	int Date::Hour(){
+	    tm* temp=gmtime(&seconds);
+	    return (temp->tm_hour)+1;
+	}
+	int Date::Min(){
+	    tm* temp=gmtime(&seconds);
+	    return (temp->tm_min);
+	}
+	int Date::Sec(){
+	    tm* temp=gmtime(&seconds);
+        return (temp->tm_sec)+1;
 	}
 	long Date::tSeconds(){
 		return seconds;
@@ -81,21 +94,33 @@ namespace Date{
 	Date::operator long(){
 	    return seconds;
 	}
-std::fstream& operator <<(std::fstream& file,Date& date){
-    file<<date.tSeconds();
-    return file;
-}
-std::fstream& operator >>(std::fstream& file,Date& date){
-    file>>date.seconds;
-    return file;
-}
-std::fstream& operator <<(std::fstream& file,Time& time){
-    long temp=time.seconds;
-    file<<temp;
-    return file;
-}
-std::fstream& operator >>(std::fstream& file,Time& time){
-    file>>time.seconds;
-    return file;
-}
+    std::fstream& operator <<(std::fstream& file,Date& date){
+        file<<date.tSeconds();
+        return file;
+    }
+    std::fstream& operator >>(std::fstream& file,Date& date){
+        file>>date.seconds;
+        return file;
+    }
+    std::fstream& operator <<(std::fstream& file,Time& time){
+        long temp=time.seconds;
+        file<<temp;
+        return file;
+    }
+    std::fstream& operator >>(std::fstream& file,Time& time){
+        file>>time.seconds;
+        return file;
+    }
+    std::string Date::str(){//format in DD/MM/YYY HH:MM:SS}
+        return std::string(ustd::intToString(Day())+"/"
+                           +ustd::intToString(Month())+"/"
+                           +ustd::intToString(Year())+" "
+                           +ustd::intToString(Hour())+":"
+                           +ustd::intToString(Min())+":"
+                           +ustd::intToString(Sec()));
+    }
+    Date curDate(){
+        time_t temp;
+        return Date(true,time(&temp));
+    }
 }
