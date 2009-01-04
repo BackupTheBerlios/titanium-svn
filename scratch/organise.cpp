@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Raphael„ÄÄGaschignard   *
+ *   Copyright (C) 2008 by RaphaelÅ@Gaschignard   *
  *   dasuraga@gmail.com   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -29,11 +29,11 @@ void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
 	evtSort(*In);
 	std::vector<std::pair<long,evt::Event> > organiser;
 	for(;;){
-	    DD "start" EE
+	    //DD "start" EE
 		if(marker<In->front().start()){
 			marker+=(In->front().start()-marker);
 		}
-		DD "moved marker" EE
+		//DD "moved marker" EE
 		for(;;){
 		    DD "begin loop" EE
 		    if(In->empty()) break;
@@ -46,15 +46,16 @@ void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
 				DD "Erased" EE
 			}else break;
 		}
-		DD "sorting organiser" EE
+		//DD "sorting organiser" EE
 		sSort(organiser);
-		DD "done sorting" EE
+
 		marker+=(organiser.front().second.length());
 		bool overdue=(marker<organiser.front().second.end());
 		Out->push_back(std::pair<bool,evt::Event>(overdue,organiser.front().second));
 		organiser.erase(organiser.begin());
 		if(In->empty()) break;
 	}
+	DD "done sorting" EE
 }
 void sSort(std::vector<std::pair<long,evt::Event> >& sortee){
 	bool sorted=false;
@@ -108,10 +109,10 @@ evtlist readFromFile(std::fstream& file){
         returnvalue.push_back(temp);
 	return returnvalue;
 }
-std::fstream& writeToFile(evtlist events,std::fstream& file){
+void writeToFile(evtlist events,std::fstream& file){
+    DD "starting file write" EE
 	while(!events.empty()){
 		file<<events.front();
 		events.erase(events.begin());
 	}
-	return file;
 }

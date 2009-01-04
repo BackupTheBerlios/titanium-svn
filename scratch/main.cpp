@@ -1,25 +1,27 @@
 #include <iostream>
 #include "organise.h"
+#include "ustd.h"
 evt::wEvent* assign();
 int main(){
     evtlist main;
     calendar secondary;
     evt::wEcontainer tMain;
     std::fstream cal("calen.dar");
-    for(int i=0;i<3;i++){
-
+    for(int i=0;i<2;i++){
+		tMain.v.push_back(assign());
     }
+	tMain.eventGen(main);
     writeToFile(main,cal);
     std::cout<<"sorting file"<<"\n";
     Organise(&main,&secondary);
-    for(int i=0;i<3;i++){
+    for(int i=0;i<secondary.size();i++){
         evt::Event bob=secondary[i].second;
         std::cout<<bob.Name<<" "<<bob.Start<<" "<<bob.End<<" "<<bob.Length<<"\n";
     }
     return 0;
 
 }
-Date::Date dateInput(){
+void dateInput(Date::Date& in){
 	int Year,Month,Day,Hour,Min,Sec;
 	std::cin>>Year>>Month>>Day>>Hour>>Min>>Sec;
 	tm temp;
@@ -29,19 +31,19 @@ Date::Date dateInput(){
 	temp.tm_hour=Hour;
 	temp.tm_mday=Day;
 	temp.tm_mon=Month-1;
-	temp.tm_year=Year-1970;
-	return Date::Date(true,long(mktime(&temp)));
+	temp.tm_year=Year-1900;
+	in=Date::Date(true,long(mktime(&temp)));
 }
-Date::Time timeInput(){
+void timeInput(Date::Time& in){
 	int Hour,Min,Sec;
 	tm temp;
 	std::cin>>Hour>>Min>>Sec;
 	temp.tm_hour=Hour;
 	temp.tm_min=Min;
 	temp.tm_sec=Sec;
-	return Date::Time(true,mktime(&temp));
+	in=Date::Time(true,ustd::mktime(&temp,false));
 }
-Date::Time timeInput2(){
+void timeInput2(Date::Time& in){
 	int Year,Month,Day,Hour,Min,Sec;
 	std::cin>>Year>>Month>>Day>>Hour>>Min>>Sec;
 	tm temp;
@@ -51,8 +53,8 @@ Date::Time timeInput2(){
 	temp.tm_hour=Hour;
 	temp.tm_mday=Day;
 	temp.tm_mon=Month;
-	temp.tm_year=Year-1970;
-	return Date::Time(true,mktime(&temp));
+	temp.tm_year=Year-1900;
+	in=Date::Time(true,ustd::mktime(&temp,true));
 }
 evt::wEvent* assign(){
 	evt::wEvent* ReturnValue;
@@ -67,24 +69,25 @@ evt::wEvent* assign(){
 	Date::Date start,TrueEnd;
 	Date::Date end;
     std::cin>>x;
-	std::cout<<"\n Name"<<std::endl;
-	std::cin>>name;
-	std::cout<<"\n Length \n HH MM SS \n";
-	length=timeInput();
-	std::cout<<"\n Start \n YYYY MM DD HH MM SS\n";
-	start=dateInput();
-	std::cout<<"\n End \n YYYY MM DD HH MM SS\n";
-	end=dateInput();
+    std::cin.get();
+	std::cout<<"\n Name \n ";
+	getline(std::cin,name);
+	std::cout<<"\n Length \n HH MM SS \n ";
+	timeInput(length);
+	std::cout<<"\n Start \n YYYY MM DD HH MM SS\n ";
+	dateInput(start);
+	std::cout<<"\n End \n YYYY MM DD HH MM SS\n ";
+	dateInput(end);
 	evt::Event Base(name,length,start,end);
 	if(x & 2){ //2,6
 		std::cout<<"\nRepeater \n YYYY MM DD HH MM SS\n";
-		repeater=timeInput2();
+		timeInput2(repeater);
 		std::cout<<"\n True end \n YYYY MM DD HH MM SS\n";
-		TrueEnd=dateInput();
+		dateInput(TrueEnd);
 	}
 	if(x & 4){//4,6
 		std::cout<<"\n sublength \n HH MM SS\n";
-		sublength=timeInput();
+		timeInput(sublength);
 	}
 	switch(x){
 		case 1:

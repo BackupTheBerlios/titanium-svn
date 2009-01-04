@@ -54,6 +54,13 @@ namespace evt{
             for(int i=0;i<v.size();i++) v[i]->eventGen(ReturnValue);
             return ReturnValue;
         }
+		std::vector<Event>& eventGen(std::vector<Event>& ReturnValue){
+			DD "entering eventGen" EE
+			for(unsigned int i=0;i<v.size();i++){
+				v[i]->eventGen(ReturnValue);
+			}
+			return ReturnValue;
+		}
         ~wEcontainer(){
             for(int i=0;i<v.size();i++) delete v[i];
         }

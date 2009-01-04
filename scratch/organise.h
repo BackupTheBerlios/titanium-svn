@@ -34,5 +34,5 @@ void sSort(std::vector<std::pair<long,evt::Event> >& sortee);
 bool pCheck(std::pair<long,evt::Event>& first,std::pair<long,evt::Event>& second);
 bool sStartsBefore(evt::Event& first,evt::Event& second);
 evtlist readFromFile(std::fstream& file);
-std::fstream& writeToFile(evtlist events,std::fstream& file);
+void writeToFile(evtlist events,std::fstream& file);
 #endif
