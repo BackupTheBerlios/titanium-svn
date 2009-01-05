@@ -39,6 +39,10 @@
 		<Unit filename="..\main.cpp" />
 		<Unit filename="..\organise.cpp" />
 		<Unit filename="..\organise.h" />
+		<Unit filename="..\ustd.cpp" />
+		<Unit filename="..\ustd.h" />
+		<Unit filename="..\wevent.cpp" />
+		<Unit filename="..\wevent.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
