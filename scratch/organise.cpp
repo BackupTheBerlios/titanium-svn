@@ -116,3 +116,24 @@ void writeToFile(evtlist events,std::fstream& file){
 		events.erase(events.begin());
 	}
 }
+void writeToFile(evt::wEcontainer wEvents,std::fstream& file){
+    std::vector<evt::wEvent*>& V=wEvents.v;
+    file<<V.size()<<"\n";
+    for(int i=0;i<V.size();i++){
+        int Type;//Normal=1;Repeating=2;Sequentail=4;RS=6
+        file<<"evt{ \n";
+        //Fetching typeid (there might be a better way to do this later, but for now it's pretty ugly
+        if(typeid(V[i])==typeid(evt::wEvent*)) Type=1;
+        if(typeid(V[i])==typeid(evt::r_wEvent*)) Type=2;
+        if(typeid(V[i])==typeid(evt::s_wEvent*)) Type=4;
+        if(typeid(V[i])==typeid(evt::sr_wEvent*)) Type=6;
+        //More horrid code. This is never going to stop
+        file<<(Type&1?"N":((Type & 2?(Type&4? "RS":"R"):"S")))<<"\n";
+        file<<V[i]->Base.Name<<"\n";
+        file<<V[i]->Base.Length<<"\n";
+        file<<V[i]->Base.Start<<"\n";
+        file<<V[i]->Base.End<<"\n";
+        V[i]->writeToFile(file);
+        file<<"}"<<"\n";
+    }
+}

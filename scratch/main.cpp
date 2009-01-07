@@ -6,7 +6,7 @@ int main(){
     evtlist main;
     calendar secondary;
     evt::wEcontainer tMain;
-    std::fstream cal("calen.dar");
+    std::fstream cal("calen.dar",std::ios::in | std::ios::out);
     for(int i=0;i<2;i++){
 		tMain.v.push_back(assign());
     }

@@ -54,4 +54,15 @@ namespace evt{
 		}
 		return ReturnValue;
 	}
+	void r_wEvent::writeToFile(std::fstream& file){
+	    file<<"R{ \n";
+	    file<<this->TrueEnd<<"\n";
+	    file<<this->Repeater<<"\n";
+	    file<<"}"<<"\n";
+    }
+    void s_wEvent::writeToFile(std::fstream& file){
+        file<<"S{ \n";
+        file<<this->subLength<<"\n";
+        file<<"}"<<"\n";
+    }
 }

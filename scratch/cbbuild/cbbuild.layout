@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="..\date.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="966" topLine="12" />
 	</File>
-	<File name="..\date.h" open="1" top="0" tabpos="9">
+	<File name="..\date.h" open="1" top="0" tabpos="8">
 		<Cursor position="1957" topLine="3" />
 	</File>
 	<File name="..\date2.h" open="0" top="0" tabpos="9">
@@ -13,22 +13,22 @@
 	<File name="..\event.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="681" topLine="0" />
 	</File>
-	<File name="..\event.h" open="1" top="0" tabpos="8">
+	<File name="..\event.h" open="1" top="0" tabpos="7">
 		<Cursor position="2211" topLine="9" />
 	</File>
 	<File name="..\main.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="1859" topLine="58" />
+		<Cursor position="325" topLine="13" />
 	</File>
 	<File name="..\organise.cpp" open="1" top="0" tabpos="4">
 		<Cursor position="4346" topLine="89" />
 	</File>
-	<File name="..\organise.h" open="1" top="0" tabpos="17">
+	<File name="..\organise.h" open="1" top="0" tabpos="11">
 		<Cursor position="2075" topLine="9" />
 	</File>
-	<File name="..\ustd.cpp" open="1" top="0" tabpos="15">
+	<File name="..\ustd.cpp" open="1" top="0" tabpos="10">
 		<Cursor position="508" topLine="0" />
 	</File>
-	<File name="..\ustd.h" open="1" top="0" tabpos="14">
+	<File name="..\ustd.h" open="1" top="0" tabpos="9">
 		<Cursor position="238" topLine="0" />
 	</File>
 	<File name="..\wevent.cpp" open="1" top="0" tabpos="5">

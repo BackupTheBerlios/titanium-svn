@@ -35,4 +35,6 @@ bool pCheck(std::pair<long,evt::Event>& first,std::pair<long,evt::Event>& second
 bool sStartsBefore(evt::Event& first,evt::Event& second);
 evtlist readFromFile(std::fstream& file);
 void writeToFile(evtlist events,std::fstream& file);
+void writeToFile(evt::wEcontainer wEvents,std::fstream& file);
+void readFromFile(evt::wEcontainer& wEvents,std::fstream& file);
 #endif
