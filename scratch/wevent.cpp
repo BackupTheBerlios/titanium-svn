@@ -65,4 +65,17 @@ namespace evt{
         file<<this->subLength<<"\n";
         file<<"}"<<"\n";
     }
+    void r_wEvent::readFromFile(std::fstream& file){
+        std::string buffer="";
+        file>>buffer; //eat "R{"
+        file>>this->TrueEnd;
+        file>>this->Repeater;
+        file>>buffer; //eat "}"
+    }
+    void s_wEvent::readFromFile(std::fstream& file){
+        std::string buffer="";
+        file>>buffer; //eat "S{"
+        file>>this->subLength;
+        file>>buffer; //eat "{"
+    }
 }

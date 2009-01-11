@@ -21,6 +21,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
+#include <cassert>
 #define DEBUG 1
 #define DD if(DEBUG) std::cout<<
 #define EE ;std::cout<<"\n";
@@ -121,19 +122,52 @@ void writeToFile(evt::wEcontainer wEvents,std::fstream& file){
     file<<V.size()<<"\n";
     for(int i=0;i<V.size();i++){
         int Type;//Normal=1;Repeating=2;Sequentail=4;RS=6
-        file<<"evt{ \n";
+        file<<"evt{\n";
         //Fetching typeid (there might be a better way to do this later, but for now it's pretty ugly
         if(typeid(V[i])==typeid(evt::wEvent*)) Type=1;
         if(typeid(V[i])==typeid(evt::r_wEvent*)) Type=2;
         if(typeid(V[i])==typeid(evt::s_wEvent*)) Type=4;
         if(typeid(V[i])==typeid(evt::sr_wEvent*)) Type=6;
         //More horrid code. This is never going to stop
-        file<<(Type&1?"N":((Type & 2?(Type&4? "RS":"R"):"S")))<<"\n";
+        //file<<(Type&1?"N":((Type & 2?(Type&4? "RS":"R"):"S")))<<"\n";
+        file<<V[i]->Type()<<"\n";
         file<<V[i]->Base.Name<<"\n";
         file<<V[i]->Base.Length<<"\n";
         file<<V[i]->Base.Start<<"\n";
         file<<V[i]->Base.End<<"\n";
         V[i]->writeToFile(file);
         file<<"}"<<"\n";
+    }
+}
+void readFromFile(evt::wEcontainer& wEvents,std::fstream& file){
+    std::vector<evt::wEvent*>& V=wEvents.v;
+    int evtCount;
+    file>>evtCount;
+    for(;evtCount>0;--evtCount){
+        evt::wEvent* temp;
+        std::string T="";
+        evt::Event tBase;
+        std::string buffer="";
+        file>>buffer;
+        std::cout<<buffer<<" is the buffer\n";
+        file>>T;
+            if(T=="N")
+                    temp=new evt::wEvent;
+
+            if(T=="RS")
+                temp=new evt::sr_wEvent;
+            if(T=="R") temp=new evt::r_wEvent;
+            if(T=="S")
+                temp=new evt::s_wEvent;
+
+        file>>tBase.Name;
+        DD tBase.Name EE
+        file>>tBase.Length;
+        file>>tBase.Start;
+        file>>tBase.End;
+        temp->readFromFile(file);
+        file>>buffer;//eat "}"
+        temp->Base=tBase;
+        wEvents.v.push_back(temp);
     }
 }

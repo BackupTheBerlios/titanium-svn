@@ -6,18 +6,24 @@ int main(){
     evtlist main;
     calendar secondary;
     evt::wEcontainer tMain;
-    std::fstream cal("calen.dar",std::ios::in | std::ios::out);
-    for(int i=0;i<2;i++){
+    evt::wEcontainer tRead;
+    std::fstream cal;
+    std::fstream second("second.dar",std::ios::out);
+   /* for(int i=0;i<2;i++){
 		tMain.v.push_back(assign());
     }
 	tMain.eventGen(main);
-    writeToFile(main,cal);
-    std::cout<<"sorting file"<<"\n";
-    Organise(&main,&secondary);
-    for(int i=0;i<secondary.size();i++){
-        evt::Event bob=secondary[i].second;
-        std::cout<<bob.Name<<" "<<bob.Start<<" "<<bob.End<<" "<<bob.Length<<"\n";
+    writeToFile(tMain,cal);
+    cal.close();*/
+    cal.open("calen.dar",std::ios::in);
+    DD "starting read" EE
+    readFromFile(tRead,cal);
+    DD "done reading, starting naming" EE
+    for(int i=0;i<tRead.v.size();i++){
+        std::cout<<tRead.v[i]->Base.Name;
     }
+    DD "starting write" EE
+    writeToFile(tRead,second);
     return 0;
 
 }
