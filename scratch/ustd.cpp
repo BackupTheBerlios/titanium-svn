@@ -16,3 +16,7 @@ time_t ustd::mktime(tm* in,bool full){
     temp+=in->tm_year*365*24*60*60;}
     return temp;
 }
+void ustd::copyStream(std::fstream& in,std::fstream& out){//I stole this dirrectly from Bjarne, 21.5.1
+    char ch;
+    while(in.get(ch)) {out.put(ch); std::cout<<ch;}
+}

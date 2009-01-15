@@ -51,7 +51,7 @@ namespace Date{
 		bool operator >=(Date second);
         Date(bool truth,long tSeconds);
         Date(){ seconds=0;};
-		
+
 		Date(int year,int month,int day,int hour,int min,int second);
 		virtual ~Date(){};
 		friend std::fstream& operator <<(std::fstream& file,Date& date);

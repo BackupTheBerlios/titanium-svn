@@ -141,7 +141,7 @@ void writeToFile(evt::wEcontainer wEvents,std::fstream& file){
 }
 void readFromFile(evt::wEcontainer& wEvents,std::fstream& file){
     std::vector<evt::wEvent*>& V=wEvents.v;
-    int evtCount;
+    int evtCount=0;
     file>>evtCount;
     for(;evtCount>0;--evtCount){
         evt::wEvent* temp;

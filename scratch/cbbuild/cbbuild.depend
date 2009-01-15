@@ -39,11 +39,11 @@
 	<string>
 	"date.h"
 
-1231085442 c:\shared\svn\scratch\date.h
+1231682890 c:\shared\svn\scratch\date.h
 	<iostream>
 	<fstream>
 
-1231607510 source:c:\shared\svn\scratch\main.cpp
+1231959651 source:c:\shared\svn\scratch\main.cpp
 	<iostream>
 	"organise.h"
 	"ustd.h"
@@ -54,7 +54,7 @@
 	<algorithm>
 	"wevent.h"
 
-1231607017 source:c:\shared\svn\scratch\organise.cpp
+1231693432 source:c:\shared\svn\scratch\organise.cpp
 	"organise.h"
 	<iostream>
 	<cstdlib>
@@ -66,12 +66,14 @@
 	"ustd.h"
 	<ctime>
 
-1231092777 source:c:\shared\svn\scratch\ustd.cpp
+1231699421 source:c:\shared\svn\scratch\ustd.cpp
 	"ustd.h"
 
-1231092761 c:\shared\svn\scratch\ustd.h
+1231699433 c:\shared\svn\scratch\ustd.h
 	<sstream>
 	<ctime>
+	<fstream>
+	<iostream>
 
 1231606482 source:c:\shared\svn\scratch\wevent.cpp
 	"wevent.h"
