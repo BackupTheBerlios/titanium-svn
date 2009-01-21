@@ -16,8 +16,8 @@ int main(){
     trash.clear();
     trash.open("calen.tmp",std::ios::out|std::ios::trunc);
     ustd::copyStream(cal,trash);
-    cal.close();cal.open("calen.tmp",std::ios::in);
-    trash.close(); trash.open("trash.tmp",std::ios::in);
+    cal.close();cal.clear();cal.open("calen.tmp",std::ios::in);
+    trash.close();trash.clear(); trash.open("trash.tmp",std::ios::in);
     evt::wEcontainer tCal,tTrash;
     std::cin.get();
     readFromFile(tCal,cal);
@@ -25,7 +25,7 @@ int main(){
     std::vector<evt::wEvent*>& tCalVec=tCal.v;
     std::vector<evt::wEvent*>& tTrashVec=tTrash.v;
     //calculate calendar
-    /*
+
     evtlist tSorter;
     tCal.EventGen(tSorter);
     calendar Caldar;
@@ -163,7 +163,7 @@ int main(){
                              <<tBase.Name<<"\n";
                 }
         }
-    }*/
+    }
 
     return 0;
 

@@ -31,7 +31,7 @@ void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
 	std::vector<std::pair<long,evt::Event> > organiser;
 	for(;;){
 	    //DD "start" EE
-		if(marker<In->front().start()){
+		if(marker<(In->front().start())){
 			marker+=(In->front().start()-marker);
 		}
 		//DD "moved marker" EE
