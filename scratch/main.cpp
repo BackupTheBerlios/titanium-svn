@@ -1,8 +1,51 @@
 #include <iostream>
 #include "organise.h"
 #include "ustd.h"
+#include "simple.h"
+#include "Window.h"
 evt::wEvent* assign();
 using std::endl;
+IMPLEMENT_APP(MyWindow)
+bool MyWindow::OnInit()
+{
+    //this is where all the GUI layering goes. Check all the definitions in simple.h
+    Simple *simple = new Simple(wxT("Simple"));
+    simple->Show(true);
+    //organisation for the list table
+    simple->evtList->InsertColumn(1,"test");
+    //backend code, startup and file copying
+    cal.open("trash.dar",std::ios::in);
+    trash.open("trash.tmp",std::ios::out|std::ios::trunc);
+    ustd::copyStream(cal,trash);
+    std::cin.get();
+    cal.close();
+    cal.clear();
+    cal.open("calen.dar",std::ios::in);
+    trash.close();
+    trash.clear();
+    trash.open("calen.tmp",std::ios::out|std::ios::trunc);
+    ustd::copyStream(cal,trash);
+    cal.close();cal.clear();cal.open("calen.tmp",std::ios::in);
+    trash.close();trash.clear(); trash.open("trash.tmp",std::ios::in);
+    tCal=new evt::wEcontainer;
+    tTrash=new evt::wEcontainer;
+    readFromFile(*tCal,cal);
+    readFromFile(*tTrash,trash);
+    std::vector<evt::wEvent*>& tCalVec=tCal->v;
+    std::vector<evt::wEvent*>& tTrashVec=tTrash->v;
+    tSorter=new evtlist;
+    tCal->EventGen(*tSorter);
+    Caldar=new calendar;
+    Organise(tSorter,Caldar);
+    tSorter->clear();
+    for(int i=0;i<tCalVec.size();i++){
+		wxString* tempString=new wxString(tCalVec[i]->Base.Name);
+    	simple->evtList->InsertItem(i,*tempString);
+    }
+    return true;
+}
+
+/*
 int main(){
     //These first functions put the data in some temp files, to avoid any file corruption
     std::fstream cal("trash.dar",std::ios::in);
@@ -53,7 +96,7 @@ int main(){
                 std::cout<<"   Name          Length               End            Overdue\n";//10 spaces
                 for(int i=0;i<Caldar.size();++i){
                     evt::Event tBase=Caldar[i].second;
-                    std::cout<<i<<". "
+                    std::cout<<i+1<<". "
                              <<tBase.Name<<"\t"
                              <<tBase.length().str()<<"\t"
                              <<tBase.End.str()<<"\t"
@@ -70,7 +113,7 @@ int main(){
                     case 0:
                         std::cout<<endl<<"Which event did you finish(Index number)?";
                         std::cin>>choice;
-                        if(choice<1 || choice >=Caldar.size()){
+                        if(choice<1 || choice >Caldar.size()){
                             choice=1;
                             std::cout<<"Index error, Event does not exist";
                             goto ReChoice;
@@ -105,7 +148,7 @@ int main(){
                 std::cout<<"Name"<<endl;
                 for(int i=0;i<tTrashVec.size();++i){
                     evt::Event tBase=tTrashVec[i]->Base;
-                    std::cout<<i<<". "
+                    std::cout<<i+1<<". "
                              <<tBase.Name<<"\n";
                 }
                 std::cout<<"\n\n 1. Recover Event"<<endl
@@ -117,7 +160,7 @@ int main(){
                     case 1:
                         std::cout<<endl<<"Which event do you want to recover(Index number)?";
                         std::cin>>choice;
-                        if(choice<1 || choice >=tTrashVec.size()){
+                        if(choice<1 || choice >tTrashVec.size()){
                             choice=2;
                             std::cout<<"Index error, Event does not exist";
                             goto ReChoice;
@@ -159,9 +202,36 @@ int main(){
 		   std::cout<<"Name"<<endl;
                 for(int i=0;i<tCalVec.size();++i){
                     evt::Event tBase=tCalVec[i]->Base;
-                    std::cout<<i<<". "
+                    std::cout<<i+1<<". "
                              <<tBase.Name<<"\n";
                 }
+                j=0;
+                std::cout<<"\n\n1.Event Info"<<endl
+                         <<"2. Remove Event"<<endl
+                         <<"3.Main Menu"<<endl;
+                std::cin>>j;
+                switch(j){
+                    case 1:
+                        if(j>tCalVec.size() || j<0){
+                            std::cout<<"error, index does not exist\n";
+                            goto ReChoice;
+                        }
+                        evt::wEvent* tBase=tCalVec[j-1];
+                        std::cout<<"\n\n"
+                                 <<"\n Name "<<tBase->Base.Name
+                                 <<"\n Start"<<tBase->Base.Start.str()
+                                 <<"\n End "<<tBase->Base.End.str()
+                                 <<"\n Length "<<tBase->Base.length()
+                                 <<"\n Type "<<tBase->Type();
+                                 if(tBase->Type()=="N"){}
+                                 else if(tBase->Type()=="R"){
+                                 }
+                        break;
+                }
+
+
+
+
         }
     }
 
@@ -237,22 +307,24 @@ evt::wEvent* assign(){
 		timeInput(sublength);
 	}
 	switch(x){
+		evt::wEvent* temp;
 		case 1:
-			evt::wEvent* temp1=new evt::wEvent(Base);
-			ReturnValue=temp1;
+			temp=new evt::wEvent(Base);
+			ReturnValue=temp;
 			break;
 		case 2:
-			evt::wEvent* temp2=new evt::r_wEvent(Base,repeater,TrueEnd);
-			ReturnValue=temp2;
+			temp=new evt::r_wEvent(Base,repeater,TrueEnd);
+			ReturnValue=temp;
 			break;
 		case 4:
-			evt::wEvent* temp3=new evt::s_wEvent(Base,sublength);
-			ReturnValue=temp3;
+			temp=new evt::s_wEvent(Base,sublength);
+			ReturnValue=temp;
 			break;
 		case 6:
-			evt::wEvent* temp4=new evt::sr_wEvent(Base,sublength,repeater,TrueEnd);
-			ReturnValue=temp4;
+			temp=new evt::sr_wEvent(Base,sublength,repeater,TrueEnd);
+			ReturnValue=temp;
 			break;
 	}
 	return ReturnValue;
 }
+*/

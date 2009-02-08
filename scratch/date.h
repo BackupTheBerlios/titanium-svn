@@ -24,7 +24,6 @@
  #ifndef DATE_H
  #define DATE_H
  //standard Debug headers
-#define DEBUG 1
 #define DD if(DEBUG) std::cout<<
 #define EE ;std::cout<<"\n";
 #include <iostream>

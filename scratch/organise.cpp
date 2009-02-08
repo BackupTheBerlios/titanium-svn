@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <cassert>
-#define DEBUG 1
+#define DEBUG 0
 #define DD if(DEBUG) std::cout<<
 #define EE ;std::cout<<"\n";
 void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
@@ -31,20 +31,17 @@ void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
 	std::vector<std::pair<long,evt::Event> > organiser;
 	for(;;){
 	    //DD "start" EE
+		if(In->empty()) break;
 		if(marker<(In->front().start())){
 			marker+=(In->front().start()-marker);
 		}
 		//DD "moved marker" EE
 		for(;;){
-		    DD "begin loop" EE
 		    if(In->empty()) break;
 			if(marker>=In->front().start()){
-			    DD "adding organiser" EE
-			    DD In->front().Name EE
 				long seperator=In->front().end()-marker;
 				organiser.push_back(std::pair<long,evt::Event>(seperator,In->front()));
 				In->erase(In->begin());
-				DD "Erased" EE
 			}else break;
 		}
 		//DD "sorting organiser" EE
@@ -56,7 +53,6 @@ void Organise(evtlist* In,std::vector<std::pair<bool,evt::Event> >* Out){
 		organiser.erase(organiser.begin());
 		if(In->empty()) break;
 	}
-	DD "done sorting" EE
 }
 void sSort(std::vector<std::pair<long,evt::Event> >& sortee){
 	bool sorted=false;
@@ -161,7 +157,6 @@ void readFromFile(evt::wEcontainer& wEvents,std::fstream& file){
                 temp=new evt::s_wEvent;
 
         file>>tBase.Name;
-        DD tBase.Name EE
         file>>tBase.Length;
         file>>tBase.Start;
         file>>tBase.End;
